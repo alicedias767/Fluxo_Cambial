@@ -22,3 +22,10 @@ b) Arquivos tratados na pasta de downloads;
 c) Dataframe dos arquivos tratados unidos e disponibilizado em excel no diretório modelo;
 d) Dataframes criados específicos para cada modelo em excel e disponíveis no diretório modelo;
 e) Print no final do código com o MAE, MSE e o valor para a próxima semana para cada um dos modelos.
+
+# Modo de Uso
+
+--> Baixar os arquivos desta pasta;
+--> Criar os diretórios como desejar, há uma recomendação na imagem "diretorio_sugestao.png";
+--> Colocar os arquivos no diretório do modelo;
+--> Executar o script daily_schedule.
