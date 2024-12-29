@@ -121,7 +121,7 @@ class previsoes:
 
         # Previsão com o modelo ARIMA (SARIMAX) usando as variáveis exógenas
         model = SARIMAX(y_treino, exog=x_treino,
-                        order=stepwise_fit.order,
+                        order=stepwise_fit.order,   
                         enforce_stationarity=False,
                         enforce_invertibility=False)
         
@@ -144,7 +144,6 @@ class previsoes:
         # Prevendo o próximo ponto com base nos últimos dados
         proxima_previsao_arimax = model_fit.forecast(steps=1, exog=[X.iloc[-1].values])
 
-        # A previsão é uma Series; para acessar o valor, use .iloc[0] para obter o primeiro elemento
         print(f"Previsão para o próximo ponto: {proxima_previsao_arimax.iloc[0].round(2)} Bilhões")
 
         # Cálculo de MAE e MSE
@@ -380,8 +379,10 @@ class previsoes:
             lgb_train,
             num_boost_round=best_iteration
         )
+
         # Fazendo previsões no conjunto de teste
         y_pred = model.predict(X_test)
+
         # Avaliando o modelo
         mae_lgb = mean_absolute_error(y_test, y_pred)
         mse_lgb = mean_squared_error(y_test, y_pred)
@@ -429,7 +430,7 @@ class previsoes:
         # Ajustando para o formato esperado pelo XGBoost
         X = X.reshape(X.shape[0], -1)  # Transformando em formato 2D
 
-        # Divisão em treino e teste (90% treino, 20% teste)
+        # Divisão em treino e teste (90% treino, 10% teste)
         train_size = int(len(X) * 0.9)
         X_train, X_test = X[:train_size], X[train_size:]
         y_train, y_test = y[:train_size], y[train_size:]
@@ -480,8 +481,11 @@ class previsoes:
         print('Verificando estacionariedade da série')
         adf_test(series)
 
+        # Printando as informações do modelo escolhido pelo auto_arima
+        print("\nModelo escolhido:", stepwise_fit.order)
+
         print('\nResultados e previsões do ARIMAX:')
-        
+
         print(f"Previsão para o próximo ponto: {proxima_previsao_arimax.iloc[0].round(2)} Bilhões")
         print(f"Mean Absolute Error (MAE) - ARIMAX: {mae_arimax}")
         print(f"Mean Squared Error (MSE) - ARIMAX: {mse_arimax}")
